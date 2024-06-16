@@ -5,8 +5,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "react-native";
 import { images } from "../constants";
 import CustomButton from "../components/CustomButton";
+import { useGlobalContext } from "../context/GlobalProvider";
 
 export default function App() {
+  const { isLoading, isLoggedIn } = useGlobalContext();
+  if (!isLoading && isLoggedIn) return <Redirect href="/home" />;
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -37,14 +41,14 @@ export default function App() {
             exploration with Aora
           </Text>
           <CustomButton
-          title="Continue with Email"
-          handlepress = {() =>router.push('/sign-in')}
-          containerStyles = "w-full mt-7"
+            title="Continue with Email"
+            handlepress={() => router.push("/sign-in")}
+            containerStyles="w-full mt-7"
           />
         </View>
       </ScrollView>
 
-      <StatusBar backgroundColor="#161622" style='light'/>
+      <StatusBar backgroundColor="#161622" style="light" />
     </SafeAreaView>
   );
 }
